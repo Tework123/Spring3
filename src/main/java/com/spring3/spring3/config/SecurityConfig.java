@@ -1,7 +1,6 @@
 package com.spring3.spring3.config;
 
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,14 +26,12 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers(HttpMethod.GET,
-                                        "/peoples",
-                                        "/cars"
-//                                        "/post",
-//                                        "/post/{id}",
-//                                        "/profile/{id}",
-//                                        "/error/**",
-//                                        "/registration",
-//                                        "/photos/**"
+                                        "/people",
+                                        "/cars",
+                                        "/people/{id}",
+                                        "/people/create",
+                                        "/people/{id}/edit"
+
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.GET,
                                         "/post/createPost",
@@ -48,22 +45,19 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/admin/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST,
-                                        "/post",
-                                        "/follow/{id}",
-                                        "/post/{id}/status"
-                                ).authenticated()
-                                .requestMatchers(HttpMethod.POST,
-                                        "/registration").permitAll()
-
+                                        "/people"
+                                ).permitAll()
                                 .requestMatchers(HttpMethod.PATCH,
-                                        "/post/{id}",
-                                        "profile/edit").authenticated()
+                                        "/people/{id}"
+
+                                ).permitAll()
+
                                 .requestMatchers(HttpMethod.DELETE,
                                         "/post/{id}",
                                         "/profile/delete"
                                 ).authenticated()
 
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
 //                        формочки все равно возвращает, даже без авторизации
 
                 ).rememberMe((remember) -> remember
