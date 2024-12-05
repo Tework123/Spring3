@@ -2,8 +2,10 @@ package com.spring3.spring3.controllers;
 
 import com.spring3.spring3.dao.PersonDAO;
 import com.spring3.spring3.models.Person;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -34,7 +36,11 @@ public class PeopleController {
     }
 
     @PostMapping("/people")
-    public String createPerson(@ModelAttribute("person") Person person) {
+    public String createPerson(@ModelAttribute("person") @Valid Person person,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "people/createPersonTemplate";
+        }
         personDAO.savePerson(person);
         return "redirect:/people";
 
@@ -47,8 +53,12 @@ public class PeopleController {
     }
 
     @PatchMapping("/people/{id}")
-    public String editPerson(@ModelAttribute("person") Person person,
+    public String editPerson(@ModelAttribute("person") @Valid Person person,
+                             BindingResult bindingResult,
                              @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "people/editPersonTemplate";
+        }
         personDAO.editPerson(id, person);
         return "redirect:/people";
     }
