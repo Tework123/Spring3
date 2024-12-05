@@ -32,6 +32,9 @@ dependencies {
 
 
     compileOnly 'org.projectlombok:lombok:1.18.36'
+//    for right work @Data
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
+
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.4.0'
 
 }

@@ -14,7 +14,7 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 2, max = 30, message = "2 to 30")

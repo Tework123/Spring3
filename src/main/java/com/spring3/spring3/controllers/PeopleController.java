@@ -1,38 +1,39 @@
 package com.spring3.spring3.controllers;
 
-import com.spring3.spring3.dao.PersonDAO;
-import com.spring3.spring3.models.Person;
+import com.spring3.spring3.entities.Person;
+import com.spring3.spring3.services.PersonService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 public class PeopleController {
-    private PersonDAO personDAO;
+    private final PersonService personService;
 
-    public PeopleController(PersonDAO personDAO) {
-        this.personDAO = personDAO;
-    }
+//    public PeopleController(PersonService personService) {
+//        this.personService = personService;
+//    }
 
     @GetMapping("/people")
     public String getPeoples(Model model) {
-        model.addAttribute("people", personDAO.getPeoples());
+        model.addAttribute("people", personService.listPeople());
         return "people/getPeoplesTemplate";
     }
 
 
     @GetMapping("/people/{id}")
-    public String getPerson(Model model, @PathVariable("id") int id) {
-        model.addAttribute("person", personDAO.getPerson(id));
+    public String getPerson(Model model, @PathVariable("id") Integer id) {
+        model.addAttribute("person", personService.getPerson(id));
         return "people/getPersonTemplate";
     }
 
     @GetMapping("/people/create")
     public String getCreatePersonTemplate(@ModelAttribute("person") Person person) {
         return "people/createPersonTemplate";
-
     }
 
     @PostMapping("/people")
@@ -41,31 +42,31 @@ public class PeopleController {
         if (bindingResult.hasErrors()) {
             return "people/createPersonTemplate";
         }
-        personDAO.savePerson(person);
+        personService.createPerson(person);
         return "redirect:/people";
 
     }
 
     @GetMapping("/people/{id}/edit")
-    public String getEditPersonTemplate(Model model, @PathVariable("id") int id) {
-        model.addAttribute("person", personDAO.getPerson(id));
+    public String getEditPersonTemplate(Model model, @PathVariable("id") Integer id) {
+        model.addAttribute("person", personService.getPerson(id));
         return "people/editPersonTemplate";
     }
 
     @PatchMapping("/people/{id}")
     public String editPerson(@ModelAttribute("person") @Valid Person person,
                              BindingResult bindingResult,
-                             @PathVariable("id") int id) {
+                             @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors()) {
             return "people/editPersonTemplate";
         }
-        personDAO.editPerson(id, person);
+        personService.editPerson(person);
         return "redirect:/people";
     }
 
     @DeleteMapping("/people/{id}")
     public String deletePerson(@PathVariable("id") int id) {
-        personDAO.deletePerson(id);
+        personService.deletePerson(id);
         return "redirect:/people";
     }
 
