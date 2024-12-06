@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>create person</title>
+    <title>create user</title>
 </head>
 <body>
 create person
-<form th:method="POST" th:action="@{/people}" th:object="${person}">
-    <label for="name"></label>
-    <input type="text" th:field="*{name}" id="name"/>
-    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">NameError</div>
+<form th:method="POST" th:action="@{/users}" th:object="${user}">
+    <label for="username"></label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">NameError</div>
     <br>
     <input type="submit" value="Create new"/>
 </form>

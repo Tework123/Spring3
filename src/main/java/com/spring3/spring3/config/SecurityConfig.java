@@ -26,11 +26,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers(HttpMethod.GET,
-                                        "/people",
+                                        "/users",
                                         "/cars",
-                                        "/people/{id}",
-                                        "/people/create",
-                                        "/people/{id}/edit"
+                                        "/users/{id}",
+                                        "/users/create",
+                                        "/users/{id}/edit"
 
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.GET,
@@ -45,10 +45,10 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/admin/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST,
-                                        "/people"
+                                        "/users"
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.PATCH,
-                                        "/people/{id}"
+                                        "/users/{id}"
 
                                 ).permitAll()
 
