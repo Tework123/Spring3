@@ -11,6 +11,14 @@ create person
     <input type="text" th:field="*{username}" id="username"/>
     <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">NameError</div>
     <br>
+    <label for="email"></label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">emailError</div>
+    <br>
+    <label for="password"></label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">passwordError</div>
+    <br>
     <input type="submit" value="Create new"/>
 </form>
 

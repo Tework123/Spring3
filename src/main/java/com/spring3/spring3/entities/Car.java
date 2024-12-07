@@ -5,11 +5,13 @@ import com.spring3.spring3.entities.enums.Brand;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "cars")
 @Data
+@Table(name = "cars")
 public class Car {
 
     @Id
@@ -20,8 +22,18 @@ public class Car {
 //    @Column(name="role")
     private Brand brand;
 
-    @ManyToMany
-    private Set<User> users;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "cars")
+    private Set<User> users = new HashSet<>();
 
     private int power;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "car")
+    private List<Photo> photos;
+
+
 }

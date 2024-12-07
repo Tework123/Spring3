@@ -8,11 +8,12 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
 @Data
+@Table(name = "users")
 public class User {
 
     @Id
@@ -37,8 +38,11 @@ public class User {
 //    @Column(name="role")
     private Role role;
 
-    @ManyToMany
-    private Set<Car> cars;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "users_cars",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "car_id")})
+    private Set<Car> cars = new HashSet<>();
 
     private boolean active;
 
