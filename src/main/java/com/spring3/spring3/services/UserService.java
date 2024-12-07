@@ -2,9 +2,13 @@ package com.spring3.spring3.services;
 
 
 import com.spring3.spring3.entities.User;
+import com.spring3.spring3.entities.enums.Role;
 import com.spring3.spring3.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -12,6 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     public List<User> listPeople() {
         return userRepository.findAll();
@@ -21,8 +27,15 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public void createUser(User user) {
+    public boolean createUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exist");
+        }
+        user.setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.getRoles().add(Role.ROLE_USER);
         userRepository.save(user);
+        return true;
     }
 
     public void editUser(User user) {

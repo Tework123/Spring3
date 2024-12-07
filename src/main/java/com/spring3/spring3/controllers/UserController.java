@@ -14,6 +14,27 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/login")
+    public String login() {
+        return "people/loginTemplate";
+    }
+
+    @GetMapping("/registration")
+    public String register(User user) {
+        return "people/registerTemplate";
+    }
+
+    @PostMapping("/registration")
+    public String createUser(@ModelAttribute("user") @Valid User user,
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "people/registerTemplate";
+        }
+        userService.createUser(user);
+        return "redirect:/users";
+
+    }
+
     @GetMapping("/users")
     public String getUsers(Model model) {
         model.addAttribute("users", userService.listPeople());
@@ -27,21 +48,6 @@ public class UserController {
         return "people/getPersonTemplate";
     }
 
-    @GetMapping("/users/create")
-    public String getCreateUserTemplate(@ModelAttribute("user") User user) {
-        return "people/createPersonTemplate";
-    }
-
-    @PostMapping("/users")
-    public String createUser(@ModelAttribute("user") @Valid User user,
-                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "people/createPersonTemplate";
-        }
-        userService.createUser(user);
-        return "redirect:/users";
-
-    }
 
     @GetMapping("/users/{id}/edit")
     public String getEditUserTemplate(Model model, @PathVariable("id") Integer id) {

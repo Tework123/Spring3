@@ -1,6 +1,7 @@
 package com.spring3.spring3.config;
 
 
+import com.spring3.spring3.services.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -28,19 +30,14 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,
                                         "/users",
                                         "/cars",
-                                        "/users/{id}",
+//                                        "/users/{id}",
                                         "/users/create",
                                         "/users/{id}/edit"
 
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.GET,
-                                        "/post/createPost",
-                                        "/post/{id}/editPost",
-                                        "/post/followPosts",
-                                        "/profile/edit",
-                                        "/profile/likedPosts",
-                                        "/profile/{id}/author",
-                                        "/profile/{id}/follower"
+                                        "/users/{id}"
+
                                 ).authenticated()
                                 .requestMatchers(
                                         "/admin/**").hasRole("ADMIN")
@@ -67,7 +64,7 @@ public class SecurityConfig {
                                 .key("mySecret")
                 ).formLogin((form) -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/post", true)
+                        .defaultSuccessUrl("/users", true)
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());
@@ -76,14 +73,14 @@ public class SecurityConfig {
     }
 
 
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(customUserDetailsService)
-//                .passwordEncoder(passwordEncoder());
-//    }
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
 
-//    @Bean
-//    PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder(8);
-//    }
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(8);
+    }
 
 }
