@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String createUser(@ModelAttribute("user") @Valid User user,
+    public String createUser(@Valid User user,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "people/registerTemplate";

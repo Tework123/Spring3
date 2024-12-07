@@ -19,7 +19,6 @@ public class Car {
     private long id;
 
     @Enumerated(EnumType.STRING)
-//    @Column(name="role")
     private Brand brand;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -31,6 +30,8 @@ public class Car {
     private Set<User> users = new HashSet<>();
 
     private int power;
+
+    private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "car")
     private List<Photo> photos;

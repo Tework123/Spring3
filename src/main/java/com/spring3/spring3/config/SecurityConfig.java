@@ -36,14 +36,17 @@ public class SecurityConfig {
 
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.GET,
-                                        "/users/{id}"
-
+                                        "/users/{id}",
+                                        "/cars/create"
                                 ).authenticated()
                                 .requestMatchers(
                                         "/admin/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST,
                                         "/users"
                                 ).permitAll()
+                                .requestMatchers(HttpMethod.POST,
+                                        "/cars/create"
+                                ).authenticated()
                                 .requestMatchers(HttpMethod.PATCH,
                                         "/users/{id}"
 
