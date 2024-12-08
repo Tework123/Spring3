@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Cars</title>
+    <title>all cars</title>
 </head>
 <body>
-<a href="/peoples">Some peoples for this car</a>
+all cars
+<div th:each="car : ${cars}">
+    <a th:href="@{/cars/{id}(id=${car.getId()})}" th:text="${car.getName()}">car</a>
+</div>
+<br>
+<br>
+<a href="/users">Start page</a>
 </body>
 </html>

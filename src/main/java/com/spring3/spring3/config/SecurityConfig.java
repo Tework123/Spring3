@@ -30,7 +30,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,
                                         "/users",
                                         "/cars",
-//                                        "/users/{id}",
+                                        "/cars/{id}",
                                         "/users/create",
                                         "/users/{id}/edit"
 

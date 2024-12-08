@@ -21,9 +21,8 @@ public class Car {
     @Enumerated(EnumType.STRING)
     private Brand brand;
 
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.PERSIST,
                     CascadeType.MERGE
             },
             mappedBy = "cars")
