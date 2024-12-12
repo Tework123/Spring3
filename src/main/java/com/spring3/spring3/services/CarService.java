@@ -1,11 +1,15 @@
 package com.spring3.spring3.services;
 
 import com.spring3.spring3.entities.Car;
+import com.spring3.spring3.entities.Photo;
 import com.spring3.spring3.entities.User;
 import com.spring3.spring3.repositories.CarRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.LinkStyle;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 

@@ -15,11 +15,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+//@EnableTransactionManagement
 public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -85,5 +88,12 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
+
+//    @Bean
+//    public PlatformTransactionManager txManager() {
+//        return yourTxManager;
+//    }
+
+
 
 }
